@@ -108,7 +108,7 @@ namespace __N_XFSAPI_W__
     HRESULT IXFSAPI_W::WFSAsyncOpen(WFSOPEN_P& wfsopen_p, const HWND hwnd, REQUESTID& RequestID) noexcept(false)
 	{
         if (wfsopen_p.strLogicName.empty())                     throw std::invalid_argument("strLogicName is EMPTY");
-        if (NULL        == wfsopen_p.hApp)                      throw std::invalid_argument("hApp is NULL");
+        if (NULL == wfsopen_p.hApp)                             throw std::invalid_argument("hApp is NULL");
         if (wfsopen_p.strAppID.empty())                         throw std::invalid_argument("strAppID is EMPTY");
         if (0x00000000  == wfsopen_p.dwSrvcVersionsRequired)    throw std::invalid_argument("dwSrvcVersionsRequired is NULL");
 

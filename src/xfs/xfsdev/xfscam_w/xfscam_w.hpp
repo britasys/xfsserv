@@ -86,14 +86,14 @@ namespace __N_XFSCAM_W__
         // << operator
 		friend std::ostream& operator<< (std::ostream& out, const _wfs_cam_caps_w& obj)
 		{
-			out << " wClass: " << obj.wClass
-				<< " fwType: " << obj.fwType
-				<< " fwCameras: " << __N_UTILITY__::Array2Str(obj.fwCameras, WFS_CAM_CAMERAS_SIZE)
-				<< " usMaxPictures: " << obj.usMaxPictures
-				<< " fwCamData: " << obj.fwCamData
+			out << " wClass: "          << obj.wClass
+				<< " fwType: "          << obj.fwType
+				<< " fwCameras: "       << __N_UTILITY__::Array2Str(obj.fwCameras, WFS_CAM_CAMERAS_SIZE)
+				<< " usMaxPictures: "   << obj.usMaxPictures
+				<< " fwCamData: "       << obj.fwCamData
 				<< " usMaxDataLength: " << obj.usMaxDataLength
-				<< " fwCharSupport: " << obj.fwCharSupport
-				<< " lpszExtra: " << obj.wfslpszextra_w.to_string();
+				<< " fwCharSupport: "   << obj.fwCharSupport
+				<< " lpszExtra: "       << obj.wfslpszextra_w.to_string();
 			return out;
 		}
 	} WFSCAMCAPS_W, * LPTTWFSCAMCAPS_W;

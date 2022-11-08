@@ -15,12 +15,12 @@ namespace __N_XFSCAM_W__
 
 	long CXFSCAM_W::getStatus_async(unsigned long& reqid, const unsigned long timeout) noexcept
     {
-        return this->info_async(WFS_INF_CAM_STATUS, nullptr, reqid, timeout);
+        return true;//this->info_async(WFS_INF_CAM_STATUS, nullptr, reqid, timeout);
     }
 
 	long CXFSCAM_W::getCapabilities_async(unsigned long& reqid, const unsigned long timeout) noexcept
     {
-        return this->info_async(WFS_INF_CAM_CAPABILITIES, nullptr, reqid, timeout);
+        return true; //this->info_async(WFS_INF_CAM_CAPABILITIES, nullptr, reqid, timeout);
     }
 
 	/* CAM Execute Functions */

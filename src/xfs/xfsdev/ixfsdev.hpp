@@ -3,25 +3,18 @@
 #ifndef __H_IXFSDEV__
 #define __H_IXFSDEV__
 
-#include <msgwnd/imsgwnd.hpp>
 #include <xfsapi_w/ixfsapi_w.hpp>
 #include <xfsapi_w/xfsapi_w.hpp>
 
 #include <deque>
 
-namespace __N_IXFSDEV__
+namespace __N_XFSDEV__
 {
-    #define ASSERT_INITILIAZED if (!this->IsInitialized()) return WFS_ERR_INTERNAL_ERROR;
-
     class IXFSDEV
     {
     private:
     protected:
-        bool m_bInitialized{ false };
-
         unsigned short m_hs{ 0 };
-        std::shared_ptr<__N_MSGWND__::IMSGWND> m_hwnd{ __N_MSGWND__::CreateMSGWND() };
-
         std::deque<unsigned long>m_reqids{};
 
     public:
@@ -30,15 +23,11 @@ namespace __N_IXFSDEV__
         IXFSDEV(IXFSDEV&&) = delete;
         IXFSDEV& operator = (const IXFSDEV&) = delete;
         IXFSDEV& operator = (IXFSDEV&&) = delete;
-        virtual ~IXFSDEV() noexcept { this->UnInitialize(); }
-
-        bool Initialize() noexcept;
-        bool UnInitialize() noexcept;
-        bool IsInitialized() const noexcept { return this->m_bInitialized; }
+        virtual ~IXFSDEV() noexcept { this->close_sync(); }
 
         // sync
-        long open_sync(__N_XFSAPI_W__::WFSOPEN_P&) noexcept;
-        long close_sync(__N_XFSAPI_W__::WFSCLOSE_P&) noexcept;
+        long open_sync(__N_XFSAPI_W__::WFSOPEN_P& wfsopen_p) noexcept;
+        long close_sync() noexcept;
 
         template <typename T>
         long info_sync(const unsigned short, void*, T&, const unsigned short) noexcept;
@@ -46,18 +35,16 @@ namespace __N_IXFSDEV__
         long execute_sync(const unsigned short, void*, T&, const unsigned short) noexcept;
 
         // async
-        long open_async(__N_XFSAPI_W__::WFSOPEN_P&, const unsigned int, unsigned long&) noexcept;
-        long close_async(__N_XFSAPI_W__::WFSCLOSE_P&, const unsigned int, unsigned long&) noexcept;
+        long open_async(__N_XFSAPI_W__::WFSOPEN_P& wfsopen_p, const unsigned int hwnd, unsigned long& reqid) noexcept;
+        long close_async(const unsigned int hwnd, unsigned long& reqid) noexcept;
 
-        long info_async(const unsigned short, void*, unsigned long&, const unsigned short) noexcept;
-        long execute_async(const unsigned short, void*, unsigned long&, const unsigned short) noexcept;
-    };    
+        long info_async(const unsigned short category, void* lpInput, const unsigned int hwnd, unsigned long& reqid, const unsigned short timeout) noexcept;
+        long execute_async(const unsigned short command, void* lpInput, const unsigned int hwnd, unsigned long& reqid, const unsigned short timeout) noexcept;
+    };
 
     template <typename T>
      long IXFSDEV::info_sync(const unsigned short category, void* lpInput, T& output, const unsigned short timeout) noexcept
      {
-        ASSERT_INITILIAZED
-
         __N_XFSAPI_W__::WFSGETINFO_P l_wfsgetinfo_p{};
         l_wfsgetinfo_p.hService = this->m_hs;
         l_wfsgetinfo_p.dwCategory = category;
@@ -79,8 +66,6 @@ namespace __N_IXFSDEV__
     template <typename T>
      long IXFSDEV::execute_sync(const unsigned short command, void* lpInput, T& output, const unsigned short timeout) noexcept
      {
-        ASSERT_INITILIAZED
-
         __N_XFSAPI_W__::WFSEXECUTE_P l_wfsexecute_p{};
         l_wfsexecute_p.hService = this->m_hs;
         l_wfsexecute_p.dwCommand = command;
@@ -98,6 +83,8 @@ namespace __N_IXFSDEV__
 
         return l_result;
      }
-} // !__N_IXFSDEV__
+
+     std::shared_ptr<IXFSDEV> CreateXFSDevice() noexcept;
+} // !__N_XFSDEV__
 
 #endif // !__H_IXFSDEV__

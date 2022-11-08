@@ -18,8 +18,8 @@ namespace __N_XFSCTRL__
         CXFSCTRL& operator = (const CXFSCTRL&) = delete;
         CXFSCTRL& operator = (CXFSCTRL&&) = delete;
 
-        virtual bool Initialize() noexcept = 0;
-        virtual bool UnInitialize() noexcept = 0;
+        bool Initialize() noexcept final;
+        bool UnInitialize() noexcept final;
     };
 } // !__N_XFSCTRL__
 
