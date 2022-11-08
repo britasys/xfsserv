@@ -24,7 +24,9 @@ namespace __N_XFSAPI_W__
 		{
 			std::thread l_thread([&wfsstartup_p, &l_cv, &l_ret]()
 			{
-				l_ret = ::WFSStartUp(wfsstartup_p.dwVersionRequired, &wfsstartup_p.WFSVersion);
+                WFSVERSION l_wfsversion{};
+				l_ret = ::WFSStartUp(wfsstartup_p.dwVersionRequired, &l_wfsversion);
+                wfsstartup_p.wfsversion_w.assign(l_wfsversion);
 				l_cv.notify_one();
 			});
 
@@ -90,8 +92,11 @@ namespace __N_XFSAPI_W__
         if (0x00000000  == wfsopen_p.dwSrvcVersionsRequired)    throw std::invalid_argument("dwSrvcVersionsRequired is NULL");
 
 		ASSERTNOBLOCKING
+        
+        WFSVERSION l_SrvcVersion{};
+        WFSVERSION l_SPIVersion{};
 
-		return ::WFSOpen
+		auto l_result = ::WFSOpen
 		(
 			(LPSTR)wfsopen_p.strLogicName.c_str(),
 			wfsopen_p.hApp,
@@ -99,10 +104,15 @@ namespace __N_XFSAPI_W__
 			wfsopen_p.dwTraceLevel,
 			wfsopen_p.dwTimeOut,
 			wfsopen_p.dwSrvcVersionsRequired,
-			&wfsopen_p.SrvcVersion,
-			&wfsopen_p.SPIVersion,
+			&l_SrvcVersion,
+			&l_SPIVersion,
 			&wfsopen_p.hService
 		);
+
+        wfsopen_p.SrvcVersion_w.assign(l_SrvcVersion);
+        wfsopen_p.SPIVersion_w.assign(l_SPIVersion);
+
+        return l_result;
     }
 
     HRESULT IXFSAPI_W::WFSAsyncOpen(WFSOPEN_P& wfsopen_p, const HWND hwnd, REQUESTID& RequestID) noexcept(false)
@@ -114,7 +124,10 @@ namespace __N_XFSAPI_W__
 
 		ASSERTNOBLOCKING
         
-		return ::WFSAsyncOpen
+        WFSVERSION l_SrvcVersion{};
+        WFSVERSION l_SPIVersion{};
+        
+		auto l_result = ::WFSAsyncOpen
 		(
 			(LPSTR)wfsopen_p.strLogicName.c_str(),
 			wfsopen_p.hApp,
@@ -124,10 +137,15 @@ namespace __N_XFSAPI_W__
 			&wfsopen_p.hService,
 			hwnd,
 			wfsopen_p.dwSrvcVersionsRequired,
-			&wfsopen_p.SrvcVersion,
-			&wfsopen_p.SPIVersion,
+			&l_SrvcVersion,
+			&l_SPIVersion,
 			&RequestID
 		);
+
+        wfsopen_p.SrvcVersion_w.assign(l_SrvcVersion);
+        wfsopen_p.SPIVersion_w.assign(l_SPIVersion);
+
+        return l_result;
 	}
     
     HRESULT IXFSAPI_W::WFSClose(const WFSCLOSE_P& wfsclose_p) noexcept

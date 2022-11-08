@@ -25,6 +25,7 @@ namespace __N_XFSCTRL__
         IXFSCTRL(IXFSCTRL&&) = delete;
         IXFSCTRL& operator = (const IXFSCTRL&) = delete;
         IXFSCTRL& operator = (IXFSCTRL&&) = delete;
+        virtual ~IXFSCTRL() { this->UnInitialize(); }
 
         virtual bool Initialize() noexcept = 0;
         virtual bool UnInitialize() noexcept = 0;

@@ -5,12 +5,12 @@ namespace __N_XFSCAM_W__
 	/* CAM Info Functions */
 	long CXFSCAM_W::getStatus_sync(WFSCAMSTATUS_W& wfs_cam_status_w, const unsigned long timeout) noexcept
     {
-        return this->info_sync(WFS_INF_CAM_STATUS, nullptr, wfs_cam_status_w, timeout);
+        return true; //this->info_sync(WFS_INF_CAM_STATUS, nullptr, wfs_cam_status_w, timeout);
     }
 
 	long CXFSCAM_W::getCapabilities_sync(WFSCAMCAPS_W& wfs_cam_caps_w, const unsigned long timeout) noexcept
     {
-        return this->info_sync(WFS_INF_CAM_CAPABILITIES, nullptr, wfs_cam_caps_w, timeout);
+        return true; //this->info_sync(WFS_INF_CAM_CAPABILITIES, nullptr, wfs_cam_caps_w, timeout);
     }
 
 	long CXFSCAM_W::getStatus_async(unsigned long& reqid, const unsigned long timeout) noexcept

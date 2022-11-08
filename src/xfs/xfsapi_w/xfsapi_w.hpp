@@ -447,7 +447,7 @@ namespace __N_XFSAPI_W__
          * information and other details about the current 
          * XFS implementation (returned parameter).
          */
-        WFSVERSION WFSVersion{};
+        WFSVERSION_W wfsversion_w{};
 
         /**
          * @brief << operator
@@ -458,11 +458,8 @@ namespace __N_XFSAPI_W__
          */
         friend std::ostream& operator << (std::ostream& out, const _wfs_startup_p& obj) noexcept
         {
-            auto wfsversion_w = WFSVERSION_W{};
-            wfsversion_w.assign(obj.WFSVersion);
-
             out << " dwVersionRequired: "   << obj.dwVersionRequired
-                << " WFSVersion: "          << wfsversion_w;
+                << " WFSVersion: "          << obj.wfsversion_w;
             return out;
         }
     } WFSSTARTUP_P, * LPWFSSTARTUP_P;
@@ -526,14 +523,14 @@ namespace __N_XFSAPI_W__
          * @brief Data structure that is to receive version support information and other 
          * details about the service-specific interface implementation (returned parameter).
          */
-        WFSVERSION SrvcVersion{};
+        WFSVERSION_W SrvcVersion_w{};
 
         /**
          * @brief Data structure that is to receive version support information and (optionally)
          * other details about the SPI implementation of the Service Provider being 
          * opened (returned parameter).
          */
-        WFSVERSION SPIVersion{};
+        WFSVERSION_W SPIVersion_w{};
 
         /**
          * @brief The service handle that the XFS Manager assigns to the service 
@@ -553,17 +550,14 @@ namespace __N_XFSAPI_W__
          */
         friend std::ostream& operator << (std::ostream& out, const _xfs_open_p& obj) noexcept
         {
-            auto srvc_version = WFSVERSION_W{}; srvc_version.assign(obj.SrvcVersion);
-            auto spi_version = WFSVERSION_W{}; spi_version.assign(obj.SPIVersion);
-
             out << " strLogicName: "            << obj.strLogicName
                 << " hApp: "                    << obj.hApp
                 << " strAppID: "                << obj.strAppID
                 << " dwTraceLevel: "            << obj.dwTraceLevel
                 << " dwTimeOut: "               << obj.dwTimeOut
                 << " dwSrvcVersionsRequired: "  << obj.dwSrvcVersionsRequired
-                << " SrvcVersion: "             << srvc_version
-                << " SPIVersion: "              << spi_version
+                << " SrvcVersion: "             << obj.SrvcVersion_w
+                << " SPIVersion: "              << obj.SPIVersion_w
                 << " hService: "                << obj.hService;
             return out;
         }

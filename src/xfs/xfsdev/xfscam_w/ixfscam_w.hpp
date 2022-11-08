@@ -8,7 +8,7 @@
 
 namespace __N_XFSCAM_W__
 {
-	class IXFSCAM_W : public __N_IXFSDEV__::IXFSDEV
+	class IXFSCAM_W : public __N_XFSDEV__::IXFSDEV
 	{
 	public:
 		IXFSCAM_W() = default;
