@@ -1,1 +1,1 @@
-# xfs-serv
+# xfs_serv
