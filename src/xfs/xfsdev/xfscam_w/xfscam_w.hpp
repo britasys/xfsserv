@@ -47,11 +47,11 @@ namespace __N_XFSCAM_W__
         // << operator
 		friend std::ostream& operator<< (std::ostream& out, const _wfs_cam_status_w& obj)
 		{
-			out << " fwDevice: " << obj.fwDevice
-				<< " fwMedia: " << __N_UTILITY__::Array2Str(obj.fwMedia, WFS_CAM_CAMERAS_SIZE)
-				<< " fwCameras: " << __N_UTILITY__::Array2Str(obj.fwCameras, WFS_CAM_CAMERAS_SIZE)
-				<< " usPictures: " << __N_UTILITY__::Array2Str(obj.usPictures, WFS_CAM_CAMERAS_SIZE)
-				<< " lpszExtra: " << obj.wfslpszextra_w.to_string();
+			out << " fwDevice: "    << obj.fwDevice
+				<< " fwMedia: "     << __N_UTILITY__::Array2Str(obj.fwMedia, WFS_CAM_CAMERAS_SIZE)
+				<< " fwCameras: "   << __N_UTILITY__::Array2Str(obj.fwCameras, WFS_CAM_CAMERAS_SIZE)
+				<< " usPictures: "  << __N_UTILITY__::Array2Str(obj.usPictures, WFS_CAM_CAMERAS_SIZE)
+				<< " lpszExtra: "   << obj.wfslpszextra_w.to_string();
 
 			return out;
 		}

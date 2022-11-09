@@ -550,12 +550,12 @@ namespace __N_XFSAPI_W__
          */
         friend std::ostream& operator << (std::ostream& out, const _xfs_open_p& obj) noexcept
         {
-            out << " strLogicName: "            << obj.strLogicName
-                << " hApp: "                    << obj.hApp
-                << " strAppID: "                << obj.strAppID
-                << " dwTraceLevel: "            << obj.dwTraceLevel
-                << " dwTimeOut: "               << obj.dwTimeOut
-                << " dwSrvcVersionsRequired: "  << obj.dwSrvcVersionsRequired
+            out << " LogicName: "               << obj.strLogicName
+                << " App: "                     << obj.hApp
+                << " AppID: "                   << obj.strAppID
+                << " TraceLevel: "              << obj.dwTraceLevel
+                << " TimeOut: "                 << obj.dwTimeOut
+                << " SrvcVersionsRequired: "    << obj.dwSrvcVersionsRequired
                 << " SrvcVersion: "             << obj.SrvcVersion_w
                 << " SPIVersion: "              << obj.SPIVersion_w
                 << " hService: "                << obj.hService;
