@@ -1,0 +1,3 @@
+[submodule "modules/cppserv"]
+	path = modules/cppserv
+	url = https://github.com/britasys/cppserv.git

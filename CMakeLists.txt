@@ -20,7 +20,7 @@ include(FetchContent)
 find_package(Boost 1.78.0 REQUIRED)
 
 #project name
-set(PROJECT_NAME xfs_serv)
+set(PROJECT_NAME xfsserv)
 
 # app directories
 set(APP_TESTS_DIR ./tests)
@@ -33,7 +33,8 @@ set(APP_INCLUDE_DIRS ${APP_SOURCE_DIR}
                      ${APP_SOURCE_DIR}/common/
                      ${APP_SOURCE_DIR}/xfs/
                      ${APP_SOURCE_DIR}/xfs/common
-                     ${APP_SOURCE_DIR}/xfs/common/xfs_headers)
+                     ${APP_SOURCE_DIR}/xfs/common/xfs_headers
+                     ${APP_MODULES_DIR}/cppserv/include)
 
 # project source files
 file(GLOB_RECURSE APP_SOURCE_FILES CONFIGURE_DEPENDS ${APP_SOURCE_DIR}/*.cpp ${APP_SOURCE_DIR}/*.hpp)
