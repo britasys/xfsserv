@@ -13,12 +13,19 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
+# FetchContent
+include(FetchContent)
+
+# boost
+find_package(Boost 1.78.0 REQUIRED)
+
 #project name
 set(PROJECT_NAME xfs_serv)
 
 # app directories
 set(APP_TESTS_DIR ./tests)
 set(APP_SAMPLES_DIR ./samples)
+set(APP_MODULES_DIR ./modules)
 set(APP_SOURCE_DIR ./src)
 
 # project include directories
@@ -41,20 +48,21 @@ add_compile_options(
    $<$<CONFIG:Release>:/MT>)
    
 add_executable(${PROJECT_NAME} ${APP_SOURCE_FILES})
-target_include_directories(${PROJECT_NAME} PRIVATE ${APP_INCLUDE_DIRS})
+target_include_directories(${PROJECT_NAME} PRIVATE ${APP_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
 target_link_directories(${PROJECT_NAME} PRIVATE ${APP_SOURCE_DIR}/xfs/lib)
 
 # tests
 if(APP_BUILD_TESTS)
 
     # googletest
-    include(FetchContent)
     FetchContent_Declare(
-      googletest
-      URL https://github.com/google/googletest/archive/03597a01ee50ed33e9dfd640b249b4be3799d395.zip
+        googletest
+        URL https://github.com/google/googletest/archive/03597a01ee50ed33e9dfd640b249b4be3799d395.zip
     )
+
     # For Windows: Prevent overriding the parent project's compiler/linker settings
     set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+    
     FetchContent_MakeAvailable(googletest)
 
     set(TEST_PROJECTS gtests)
@@ -66,8 +74,8 @@ if(APP_BUILD_TESTS)
             $<$<CONFIG:Release>:/MT>
         )
         add_executable(${TEST_PROJECT} ${APP_TESTS_DIR}/${TEST_PROJECT}.cpp)
-        target_link_directories(${PROJECT_NAME} PRIVATE ${APP_SOURCE_DIR}/xfs/lib)
-        target_include_directories(${PROJECT_NAME} PRIVATE ${APP_INCLUDE_DIRS})
+        target_link_directories(${TEST_PROJECT} PRIVATE ${APP_SOURCE_DIR}/xfs/lib)
+        target_include_directories(${TEST_PROJECT} PRIVATE ${APP_INCLUDE_DIRS})
         target_link_libraries(${TEST_PROJECT} GTest::gtest_main)
         include(GoogleTest)
         gtest_discover_tests(${TEST_PROJECT})
